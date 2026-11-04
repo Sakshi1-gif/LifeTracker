@@ -1,0 +1,884 @@
+
+/* =====================================
+   RESET
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    color: #e8e3d8;
+    background: #080610;
+}
+
+
+/* =====================================
+   DASHBOARD BACKGROUND
+===================================== */
+
+.dashboard-layout {
+    min-height: 100vh;
+    display: flex;
+
+    background:
+        linear-gradient(
+            rgba(3, 5, 12, 0.25),
+            rgba(3, 5, 12, 0.40)
+        ),
+        url("./dashboardBD.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+/* =====================================
+   SIDEBAR
+===================================== */
+
+.sidebar {
+    width: 220px;
+    min-height: 100vh;
+    flex-shrink: 0;
+
+    background: rgba(5, 8, 16, 0.91);
+    border-right: 1px solid rgba(213, 179, 106, 0.18);
+
+    padding: 25px 15px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo-symbol {
+    color: #d5b36a;
+    font-size: 35px;
+}
+
+.logo h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+    letter-spacing: 2px;
+    color: #d5b36a;
+    margin-top: 8px;
+}
+
+.logo span {
+    display: block;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: #777;
+    margin-top: 7px;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav-btn,
+.logout-btn {
+    width: 100%;
+    padding: 12px;
+
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+
+    text-align: left;
+    color: #aaa;
+
+    font-size: 12px;
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.nav-btn span,
+.logout-btn span {
+    display: inline-block;
+    width: 25px;
+    color: #d5b36a;
+    font-size: 16px;
+}
+
+.nav-btn:hover,
+.logout-btn:hover {
+    background: rgba(213, 179, 106, 0.08);
+    color: #eee;
+}
+
+.nav-btn.active {
+    background: linear-gradient(
+        90deg,
+        rgba(213, 179, 106, 0.2),
+        rgba(213, 179, 106, 0.04)
+    );
+
+    border-color: rgba(213, 179, 106, 0.2);
+    color: #e5c982;
+}
+
+.logout-btn {
+    margin-top: auto;
+}
+
+
+/* =====================================
+   MAIN CONTENT
+===================================== */
+
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+
+    min-height: 100vh;
+    padding: 25px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* =====================================
+   BALANCED DASHBOARD LAYOUT
+===================================== */
+
+#dashboardPage {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    gap: 18px;
+}
+
+#dashboardPage.active {
+    display: flex;
+}
+
+
+
+/* =====================================
+   PLAYER HEADER
+===================================== */
+
+.player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 15px 20px;
+
+    background: rgba(8, 10, 18, 0.78);
+    border: 1px solid rgba(213, 179, 106, 0.22);
+    border-radius: 10px;
+
+    backdrop-filter: blur(8px);
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.player-avatar {
+    width: 65px;
+    height: 65px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    border: 1px solid #a7823e;
+
+    background: radial-gradient(
+        circle,
+        #352b20,
+        #10101b
+    );
+
+    color: #e5c982;
+    font-size: 30px;
+}
+
+.player-level {
+    color: #d5b36a;
+    font-size: 11px;
+}
+
+.player-details h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+    margin: 4px 0 8px;
+}
+
+.xp-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.xp-bar {
+    width: 130px;
+    height: 7px;
+
+    background: #25212a;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.xp-fill {
+    width: 55%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        #a7823e,
+        #f2d48c
+    );
+
+    border-radius: 20px;
+    transition: width 0.4s;
+}
+
+.xp-container span {
+    color: #aaa;
+    font-size: 10px;
+}
+
+.date-time {
+    text-align: right;
+}
+
+#dateText {
+    display: block;
+    color: #aaa;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.clock {
+    color: #e5c982;
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+}
+
+.clock-icon {
+    font-size: 17px;
+}
+
+
+/* =====================================
+   PANELS
+===================================== */
+
+.panel {
+    background: rgba(7, 10, 18, 0.82);
+
+    border: 1px solid rgba(213, 179, 106, 0.2);
+    border-radius: 10px;
+
+    padding: 18px;
+
+    backdrop-filter: blur(8px);
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+.section-heading h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #e5c982;
+}
+
+.view-all {
+    background: transparent;
+    border: none;
+    color: #aaa;
+
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.view-all:hover {
+    color: #e5c982;
+}
+
+
+/* =====================================
+   YOUR STATS
+===================================== */
+
+.stats-section {
+    margin-bottom: 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.stat-card {
+    padding: 13px;
+
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat-top {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 12px;
+}
+
+.stat-top span {
+    font-size: 16px;
+}
+
+.stat-top h3 {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 10px;
+    color: #888;
+}
+
+.stat-value strong {
+    font-size: 15px;
+    color: #eee;
+}
+
+.stat-bar {
+    height: 4px;
+    background: #25212a;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.stat-bar div {
+    height: 100%;
+    border-radius: 20px;
+}
+
+.health .stat-top span { color: #61c99a; }
+.health .stat-bar div { background: #61c99a; }
+
+.fitness .stat-top span { color: #45bde9; }
+.fitness .stat-bar div { background: #45bde9; }
+
+.focus .stat-top span { color: #b18aff; }
+.focus .stat-bar div { background: #b18aff; }
+
+.finances .stat-top span { color: #e4b84d; }
+.finances .stat-bar div { background: #e4b84d; }
+
+.time-stat .stat-top span { color: #66aaff; }
+.time-stat .stat-bar div { background: #66aaff; }
+
+
+/* =====================================
+   ACTIVE QUESTS + EVENTS
+===================================== */
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.quest-item,
+.event-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.quest-item:last-child,
+.event-item:last-child {
+    border-bottom: none;
+}
+
+.quest-icon,
+.event-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    font-size: 15px;
+}
+
+.quest-icon {
+    color: #62d6a1;
+    background: rgba(70, 200, 140, 0.12);
+}
+
+.event-icon {
+    color: #e5c982;
+    background: rgba(213, 179, 106, 0.12);
+}
+
+.quest-details,
+.event-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.quest-details h3,
+.event-details h3 {
+    font-size: 11px;
+    font-weight: 500;
+    color: #eee;
+    margin-bottom: 5px;
+}
+
+.quest-details p,
+.event-details p {
+    font-size: 9px;
+    color: #888;
+}
+
+.quest-reward {
+    font-size: 10px;
+    color: #aaa;
+    white-space: nowrap;
+}
+
+.complete-quest {
+    padding: 6px 9px;
+
+    background: rgba(70, 200, 140, 0.1);
+    border: 1px solid rgba(70, 200, 140, 0.25);
+    border-radius: 5px;
+
+    color: #61c99a;
+    font-size: 9px;
+
+    cursor: pointer;
+}
+
+.complete-quest:hover {
+    background: rgba(70, 200, 140, 0.2);
+}
+
+
+/* =====================================
+   PAGE SWITCHING
+===================================== */
+
+.page {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+
+/* =====================================
+   QUEST TABS
+===================================== */
+
+.quest-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.quest-tab {
+    padding: 9px 18px;
+
+    background: transparent;
+    border: 1px solid rgba(213, 179, 106, 0.2);
+    border-radius: 5px;
+
+    color: #aaa;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.quest-tab.active {
+    background: rgba(213, 179, 106, 0.15);
+    color: #e5c982;
+    border-color: #a7823e;
+}
+
+
+/* =====================================
+   PROGRESS PAGE
+===================================== */
+
+.progress-content {
+    text-align: center;
+    padding: 35px 10px;
+}
+
+.progress-number {
+    font-family: 'Cinzel', serif;
+    font-size: 65px;
+    color: #e5c982;
+}
+
+.progress-content h3 {
+    font-family: 'Cinzel', serif;
+    margin: 10px 0;
+}
+
+.progress-content p {
+    color: #aaa;
+    margin: 15px 0;
+    font-size: 12px;
+}
+
+.xp-bar.large {
+    width: 80%;
+    height: 10px;
+    margin: 20px auto;
+}
+
+
+/* =====================================
+   SETTINGS
+===================================== */
+
+.settings-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 350px;
+}
+
+.settings-content label {
+    color: #d5b36a;
+    font-size: 12px;
+}
+
+.settings-content input {
+    padding: 12px;
+
+    background: #12101b;
+    border: 1px solid #3b3244;
+    border-radius: 5px;
+
+    color: white;
+    outline: none;
+}
+
+.settings-content input:focus {
+    border-color: #c7a45b;
+}
+
+.gold-button {
+    padding: 12px;
+
+    background: linear-gradient(135deg, #d7b66e, #a7823e);
+    border: none;
+    border-radius: 5px;
+
+    color: #100c18;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.settings-note {
+    color: #777;
+    font-size: 10px;
+}
+
+
+/* =====================================
+   MOTIVATIONAL QUOTE
+===================================== */
+
+
+.quote-footer {
+    margin-top: 0;
+    padding: 15px;
+
+    text-align: center;
+
+    color: #d5b36a;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+
+    border-top: 1px solid rgba(213, 179, 106, 0.12);
+}
+
+
+.quote-footer span {
+    color: #a7823e;
+    margin: 0 10px;
+}
+
+
+/* =====================================
+   MUSIC BUTTON
+===================================== */
+
+.music-control {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 1000;
+}
+
+.music-button {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(12, 9, 20, 0.95);
+    border: 1px solid #806638;
+    border-radius: 8px;
+
+    color: #b9a27a;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.music-button:hover {
+    border-color: #e5c982;
+    color: #f5d98a;
+}
+
+.music-button.playing {
+    color: #f5d98a;
+    border-color: #d5b36a;
+
+    box-shadow:
+        0 0 12px rgba(213, 179, 106, 0.25),
+        inset 0 0 10px rgba(213, 179, 106, 0.08);
+}
+
+
+/* =====================================
+   MUSIC PANEL
+===================================== */
+
+.music-panel {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+
+    width: 230px;
+    padding: 18px;
+
+    background: rgba(10, 8, 20, 0.97);
+    border: 1px solid rgba(213, 179, 106, 0.4);
+    border-radius: 10px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(10px);
+    transition: 0.25s;
+}
+
+.music-panel.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.music-heading,
+.music-row,
+.volume-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.music-heading {
+    color: #d5b36a;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(213, 179, 106, 0.15);
+    margin-bottom: 15px;
+}
+
+.music-heading button {
+    background: transparent;
+    border: none;
+    color: #aaa;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.music-row {
+    font-size: 12px;
+    margin-bottom: 18px;
+}
+
+.music-row button {
+    padding: 6px 15px;
+
+    background: transparent;
+    border: 1px solid #806638;
+    border-radius: 20px;
+
+    color: #aaa;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.music-row button.on {
+    background: #c7a45b;
+    color: #100c18;
+}
+
+.volume-row {
+    font-size: 11px;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+#volumeValue {
+    color: #d5b36a;
+}
+
+#volumeSlider {
+    width: 100%;
+    accent-color: #c7a45b;
+    cursor: pointer;
+}
+
+
+/* =====================================
+   ANIMATION
+===================================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 1100px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .dashboard-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+        padding: 15px;
+    }
+
+    .logo {
+        margin-bottom: 15px;
+    }
+
+    .navigation {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .nav-btn {
+        width: auto;
+        flex: 1;
+        text-align: center;
+    }
+
+    .logout-btn {
+        margin-top: 10px;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .player-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .date-time {
+        text-align: left;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 400px) {
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
