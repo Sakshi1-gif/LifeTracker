@@ -1,7 +1,7 @@
 
-// =====================================
-// PLAYER DATA
-// =====================================
+"use strict";
+
+/* PLAYER */
 
 let player = {
     name: "Shadow Walker",
@@ -10,42 +10,72 @@ let player = {
     nextLevelXP: 400
 };
 
-
-// =====================================
-// QUEST DATA
-// =====================================
+/* QUEST DATA */
 
 let quests = [
     {
         id: 1,
         title: "Complete 20 minutes of exercise",
-        category: "Compulsory · Daily",
-        reward: 20,
-        type: "fitness",
-        completed: false
+        category: "daily",
+        type: "compulsory",
+        reward: 10,
+        progress: 12,
+        target: 20,
+        due: "Due today",
+        completed: false,
+        stat: "fitness"
     },
     {
         id: 2,
         title: "Finish your study session",
-        category: "Compulsory · Daily",
+        category: "daily",
+        type: "compulsory",
         reward: 15,
-        type: "focus",
-        completed: false
+        progress: 1,
+        target: 1,
+        due: "Completed",
+        completed: true,
+        stat: "focus"
     },
     {
         id: 3,
         title: "Save $10",
-        category: "Optional · Daily",
+        category: "daily",
+        type: "optional",
         reward: 10,
-        type: "finances",
-        completed: false
+        progress: 5,
+        target: 10,
+        due: "Due today",
+        completed: false,
+        stat: "finances"
+    },
+    {
+        id: 4,
+        title: "Read a book for 30 minutes",
+        category: "daily",
+        type: "optional",
+        reward: 10,
+        progress: 0,
+        target: 1,
+        due: "Due in 2 days",
+        completed: false,
+        stat: "focus"
+    },
+    {
+        id: 5,
+        title: "Work on your long-term goal",
+        category: "weekly",
+        type: "compulsory",
+        reward: 30,
+        progress: 1,
+        target: 3,
+        due: "Due in 4 days",
+        completed: false,
+        stat: "focus"
     }
 ];
 
-
-// =====================================
-// EVENT DATA
-// =====================================
+/* EVENTS */
 
 let events = [
     {
@@ -68,10 +98,7 @@ let events = [
     }
 ];
 
-
-// =====================================
-// STATS
-// =====================================
+/* STATS */
 
 let stats = {
     health: 78,
@@ -81,160 +108,154 @@ let stats = {
     time: 85
 };
 
+let filter = "all";
 
-// =====================================
-// PAGE NAVIGATION
-// =====================================
+/* SHORTCUTS */
 
-const navButtons = document.querySelectorAll(".nav-btn");
-const pages = document.querySelectorAll(".page");
+const $ = selector => document.querySelector(selector);
+const $$ = selector => document.querySelectorAll(selector);
 
-function showPage(pageName) {
+/* NAVIGATION */
 
-    pages.forEach(page => {
+function showPage(name) {
+
+    $$(".page").forEach(page => {
         page.classList.remove("active");
     });
 
-    navButtons.forEach(button => {
+    $$(".nav-btn").forEach(button => {
         button.classList.remove("active");
     });
 
-    const selectedPage = document.getElementById(pageName + "Page");
+    $("#" + name + "Page")?.classList.add("active");
 
-    if (selectedPage) {
-        selectedPage.classList.add("active");
-    }
-
-    const selectedButton = document.querySelector(
-        `.nav-btn[data-page="${pageName}"]`
-    );
-
-    if (selectedButton) {
-        selectedButton.classList.add("active");
-    }
-
+    document
+        .querySelector(`.nav-btn[data-page="${name}"]`)
+        ?.classList.add("active");
 }
 
-navButtons.forEach(button => {
-
+$$(".nav-btn").forEach(button => {
     button.addEventListener("click", () => {
         showPage(button.dataset.page);
     });
-
 });
 
-
-// View All buttons
-
-document.querySelectorAll(".view-all").forEach(button => {
-
+$$(".view-all").forEach(button => {
     button.addEventListener("click", () => {
         showPage(button.dataset.page);
     });
-
 });
 
+/* DATE AND TIME */
 
-// =====================================
-// DATE AND TIME
-// =====================================
+function clock() {
 
-function updateDateTime() {
+    let d = new Date();
 
-    const now = new Date();
+    $("#dateText").textContent =
+        d.toLocaleDateString("en-US", {
+            month: "short",
+            day: "2-digit",
+            year: "numeric"
+        });
 
-    const months = [
-        "Jan", "Feb", "Mar", "Apr",
-        "May", "Jun", "Jul", "Aug",
-        "Sep", "Oct", "Nov", "Dec"
-    ];
-
-    const day = String(now.getDate()).padStart(2, "0");
-
-    const month = months[now.getMonth()];
-
-    const year = now.getFullYear();
-
-    let hours = now.getHours();
-    let minutes = String(now.getMinutes()).padStart(2, "0");
-
-    const ampm = hours >= 12 ? "PM" : "AM";
-
-    hours = hours % 12 || 12;
-
-    document.getElementById("dateText").textContent =
-        `${month} ${day}, ${year}`;
-
-    document.getElementById("timeText").textContent =
-        `${hours}:${minutes} ${ampm}`;
-
+    $("#timeText").textContent =
+        d.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit"
+        });
 }
 
-updateDateTime();
+clock();
+setInterval(clock, 1000);
 
-setInterval(updateDateTime, 1000);
-
-
-// =====================================
-// PLAYER DISPLAY
-// =====================================
+/* PLAYER XP */
 
 function updatePlayer() {
 
-    document.getElementById("playerName").textContent =
-        player.name;
+    $("#playerName").textContent = player.name;
 
-    document.getElementById("playerLevel").textContent =
+    $("#playerLevel").textContent =
         "Lv. " + player.level;
 
-    document.getElementById("xpText").textContent =
+    $("#xpText").textContent =
         `${player.xp} / ${player.nextLevelXP} XP`;
 
-    const percentage =
-        (player.xp / player.nextLevelXP) * 100;
+    let percentage =
+        Math.min(100, player.xp / player.nextLevelXP * 100);
 
-    document.getElementById("xpFill").style.width =
-        percentage + "%";
+    $("#xpFill").style.width = percentage + "%";
 
-    document.getElementById("progressLevel").textContent =
-        player.level;
+    $("#progressLevel").textContent = player.level;
 
-    document.getElementById("progressXP").textContent =
+    $("#progressXP").textContent =
         player.xp + " XP earned";
 
-    document.getElementById("progressXPFill").style.width =
+    $("#progressXPFill").style.width =
         percentage + "%";
-
 }
 
-
-// =====================================
-// UPDATE STATS
-// =====================================
+/* UPDATE STATS */
 
 function updateStats() {
 
-    document.getElementById("healthValue").textContent =
-        stats.health;
+    Object.entries(stats).forEach(([key, value]) => {
 
-    document.getElementById("fitnessValue").textContent =
-        stats.fitness;
+        $("#" + key + "Value").textContent = value;
 
-    document.getElementById("focusValue").textContent =
-        stats.focus;
+        let maxValue = key === "finances" ? 1000 : 100;
 
-    document.getElementById("financesValue").textContent =
-        stats.finances;
+        $("#" + key + "Bar").style.width =
+            Math.min(100, value / maxValue * 100) + "%";
 
-    document.getElementById("timeStatValue").textContent =
-        stats.time;
-
+    });
 }
 
+/* PREVENT HTML INJECTION */
 
-// =====================================
-// ADD RECENT EVENT
-// =====================================
+function safe(text) {
+
+    return String(text).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    }[character]));
+}
+
+/* EVENT RENDERING */
+
+function renderEvents() {
+
+    let container = $("#allEventsList");
+
+    container.innerHTML = "";
+
+    events.forEach(event => {
+
+        let div = document.createElement("div");
+
+        div.className = "event-item";
+
+        div.innerHTML = `
+            <div class="event-icon">${event.icon}</div>
+
+            <div class="event-details">
+                <h3>${safe(event.title)}</h3>
+                <p>${safe(event.reward)}</p>
+            </div>
+
+            <span class="quest-reward">
+                ${event.time}
+            </span>
+        `;
+
+        container.append(div);
+    });
+}
+
+/* ADD EVENT */
 
 function addEvent(title, reward, icon = "✦") {
 
@@ -246,130 +267,203 @@ function addEvent(title, reward, icon = "✦") {
     });
 
     renderEvents();
-
 }
 
+/* QUEST BOARD */
 
-// =====================================
-// RENDER ACTIVE QUESTS
-// =====================================
+function renderQuests() {
 
-function renderActiveQuests() {
-
-    const container =
-        document.getElementById("activeQuestList");
+    let container = $("#questList");
 
     container.innerHTML = "";
 
-    const activeQuests = quests.filter(
-        quest => !quest.completed
-    );
+    let list = quests;
 
-    if (activeQuests.length === 0) {
+    if (filter === "daily" || filter === "weekly") {
 
-        container.innerHTML =
-            `<p class="empty-message">
-                No active quests. Enjoy your victory!
-            </p>`;
+        list = quests.filter(quest =>
+            quest.category === filter
+        );
+
+    }
+
+    if (filter === "compulsory" || filter === "optional") {
+
+        list = quests.filter(quest =>
+            quest.type === filter
+        );
+
+    }
+
+    if (list.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty-quests">
+                No quests found in this category.
+            </div>
+        `;
 
         return;
     }
 
-    activeQuests.forEach(quest => {
+    list.forEach(quest => {
 
-        const item = document.createElement("div");
+        let percentage =
+            Math.min(100, quest.progress / quest.target * 100);
 
-        item.className = "quest-item";
+        let div = document.createElement("div");
 
-        item.innerHTML = `
+        div.className =
+            "quest-card" + (quest.completed ? " completed" : "");
+
+        div.innerHTML = `
+            <div class="quest-card-icon">
+                ${quest.completed ? "✓" : "⚔"}
+            </div>
+
+            <div class="quest-card-main">
+
+                <h3 class="quest-card-title">
+                    ${safe(quest.title)}
+                </h3>
+
+                <div class="quest-card-meta">
+                    <span>${quest.category}</span>
+                    ·
+                    <span>${quest.type}</span>
+                    ·
+                    <span class="quest-progress-text">
+                        ${quest.progress}/${quest.target}
+                    </span>
+                </div>
+
+                <div class="quest-progress-track">
+                    <div
+                        class="quest-progress-fill"
+                        style="width:${percentage}%">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="quest-card-right">
+
+                <span class="quest-xp">
+                    +${quest.reward} XP
+                </span>
+
+                <span class="quest-status ${quest.completed ? "done" : "due"}">
+                    ${quest.completed ? "Completed" : quest.due}
+                </span>
+
+                <button
+                    class="quest-action"
+                    data-id="${quest.id}"
+                    ${quest.completed ? "disabled" : ""}>
+                    ${quest.completed ? "✓ Done" : "Complete"}
+                </button>
+
+            </div>
+        `;
+
+        container.append(div);
+    });
+}
+
+/* DASHBOARD QUEST PREVIEW */
+
+function renderDashboard() {
+
+    let container = $("#dashboardQuestList");
+
+    container.innerHTML = "";
+
+    let list = quests
+        .filter(quest => !quest.completed)
+        .slice(0, 3);
+
+    if (list.length === 0) {
+
+        container.innerHTML = `
+            <p class="empty-quests">
+                All quests completed. Enjoy your victory!
+            </p>
+        `;
+
+        return;
+    }
+
+    list.forEach(quest => {
+
+        let div = document.createElement("div");
+
+        div.className = "quest-item";
+
+        div.innerHTML = `
             <div class="quest-icon">⚔</div>
 
             <div class="quest-details">
-                <h3>${quest.title}</h3>
-                <p>${quest.category}</p>
+                <h3>${safe(quest.title)}</h3>
+                <p>${quest.progress}/${quest.target} completed</p>
             </div>
 
-            <span class="quest-reward">+${quest.reward} XP</span>
-
-            <button class="complete-quest"
-                    data-id="${quest.id}">
-                ✓
-            </button>
+            <span class="quest-reward">
+                +${quest.reward} XP
+            </span>
         `;
 
-        container.appendChild(item);
-
+        container.append(div);
     });
-
 }
 
+/* COMPLETED QUEST COUNT */
 
-// =====================================
-// RENDER EVENTS
-// =====================================
+function countDone() {
 
-function renderEvents() {
-
-    const recentContainer =
-        document.getElementById("recentEventList");
-
-    const allContainer =
-        document.getElementById("allEventsList");
-
-    recentContainer.innerHTML = "";
-    allContainer.innerHTML = "";
-
-    events.forEach((event, index) => {
-
-        const item = document.createElement("div");
-
-        item.className = "event-item";
-
-        item.innerHTML = `
-            <div class="event-icon">${event.icon}</div>
-
-            <div class="event-details">
-                <h3>${event.title}</h3>
-                <p>${event.reward}</p>
-            </div>
-
-            <span class="quest-reward">${event.time}</span>
-        `;
-
-        allContainer.appendChild(item);
-
-        if (index < 3) {
-            recentContainer.appendChild(item.cloneNode(true));
-        }
-
-    });
-
+    $("#completedCount").textContent =
+        quests.filter(quest => quest.completed).length
+        + " quests completed";
 }
 
+/* QUEST FILTERS */
 
-// =====================================
-// COMPLETE QUEST
-// =====================================
+$$(".quest-filter").forEach(button => {
 
-function completeQuest(questId) {
+    button.addEventListener("click", () => {
 
-    const quest = quests.find(
-        quest => quest.id === questId
+        $$(".quest-filter").forEach(filterButton => {
+            filterButton.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        filter = button.dataset.filter;
+
+        renderQuests();
+    });
+});
+
+/* COMPLETE QUEST */
+
+document.addEventListener("click", event => {
+
+    let button = event.target.closest(".quest-action");
+
+    if (!button || button.disabled) return;
+
+    let quest = quests.find(item =>
+        item.id === Number(button.dataset.id)
     );
 
-    if (!quest || quest.completed) {
-        return;
-    }
+    if (!quest || quest.completed) return;
 
-    // Mark quest completed
-
+    quest.progress = quest.target;
     quest.completed = true;
-
-    // Give XP reward
+    quest.due = "Completed";
 
     player.xp += quest.reward;
 
-    // Level up if necessary
+    /* LEVEL UP */
 
     while (player.xp >= player.nextLevelXP) {
 
@@ -384,24 +478,21 @@ function completeQuest(questId) {
             "Level Up",
             "✦"
         );
-
     }
 
-    // Increase related stat
+    /* STAT REWARDS */
 
-    if (quest.type === "fitness") {
+    if (quest.stat === "fitness") {
         stats.fitness = Math.min(100, stats.fitness + 5);
     }
 
-    if (quest.type === "focus") {
+    if (quest.stat === "focus") {
         stats.focus = Math.min(100, stats.focus + 5);
     }
 
-    if (quest.type === "finances") {
+    if (quest.stat === "finances") {
         stats.finances += 10;
     }
-
-    // Add completion event
 
     addEvent(
         "Completed: " + quest.title,
@@ -409,321 +500,208 @@ function completeQuest(questId) {
         "✓"
     );
 
-    // Update all displays
-
-    renderActiveQuests();
-    renderQuestPage();
+    renderQuests();
+    renderDashboard();
     renderEvents();
+
     updatePlayer();
     updateStats();
+    countDone();
+});
 
-    updateCompletedCount();
+/* ADD QUEST MODAL */
 
-}
+const modal = $("#questModal");
 
+$("#addQuestBtn").addEventListener("click", () => {
+    modal.classList.add("open");
+});
 
-// =====================================
-// QUEST COMPLETION BUTTONS
-// =====================================
+$("#closeQuestModal").addEventListener("click", () => {
+    modal.classList.remove("open");
+});
 
-document.addEventListener("click", event => {
+modal.addEventListener("click", event => {
 
-    const button = event.target.closest(".complete-quest");
-
-    if (!button) {
-        return;
+    if (event.target === modal) {
+        modal.classList.remove("open");
     }
-
-    const questId = Number(button.dataset.id);
-
-    completeQuest(questId);
-
 });
 
+/* ESCAPE KEY */
 
-// =====================================
-// QUEST JOURNAL
-// =====================================
+document.addEventListener("keydown", event => {
 
-const questTabs = document.querySelectorAll(".quest-tab");
+    if (event.key === "Escape") {
 
-let currentQuestTab = "active";
+        modal.classList.remove("open");
 
-questTabs.forEach(tab => {
-
-    tab.addEventListener("click", () => {
-
-        questTabs.forEach(button => {
-            button.classList.remove("active");
-        });
-
-        tab.classList.add("active");
-
-        currentQuestTab = tab.dataset.tab;
-
-        renderQuestPage();
-
-    });
-
+        $("#musicPanel").classList.remove("open");
+    }
 });
 
+/* CREATE QUEST */
 
-function renderQuestPage() {
+$("#questForm").addEventListener("submit", event => {
 
-    const container =
-        document.getElementById("questPageList");
+    event.preventDefault();
 
-    container.innerHTML = "";
+    let title = $("#newQuestTitle").value.trim();
 
-    const filteredQuests = quests.filter(quest => {
+    let target = Number($("#newQuestTarget").value);
 
-        if (currentQuestTab === "active") {
-            return !quest.completed;
-        }
+    let reward = Number($("#newQuestXP").value);
 
-        return quest.completed;
+    if (!title || target < 1 || reward < 1) {
 
-    });
-
-    if (filteredQuests.length === 0) {
-
-        container.innerHTML = `
-            <p class="empty-message">
-                Nothing here yet.
-            </p>
-        `;
+        alert("Please enter valid quest details.");
 
         return;
     }
 
-    filteredQuests.forEach(quest => {
+    quests.push({
 
-        const item = document.createElement("div");
+        id: Date.now(),
 
-        item.className = "quest-item";
+        title: title,
 
-        item.innerHTML = `
-            <div class="quest-icon">
-                ${quest.completed ? "✓" : "⚔"}
-            </div>
+        category: $("#newQuestCategory").value,
 
-            <div class="quest-details">
-                <h3>${quest.title}</h3>
-                <p>${quest.category}</p>
-            </div>
+        type: $("#newQuestType").value,
 
-            <span class="quest-reward">
-                ${quest.completed ? "Completed" : "+" + quest.reward + " XP"}
-            </span>
+        reward: reward,
 
-            ${quest.completed ? "" : `
-                <button class="complete-quest"
-                        data-id="${quest.id}">
-                    ✓
-                </button>
-            `}
-        `;
+        progress: 0,
 
-        container.appendChild(item);
+        target: target,
+
+        due: $("#newQuestDue").value,
+
+        completed: false,
+
+        stat: "focus"
 
     });
 
-}
+    event.target.reset();
 
+    $("#newQuestTarget").value = 1;
+    $("#newQuestXP").value = 10;
 
-// =====================================
-// COMPLETED QUEST COUNT
-// =====================================
+    modal.classList.remove("open");
 
-function updateCompletedCount() {
+    renderQuests();
+    renderDashboard();
+    countDone();
+});
 
-    const count = quests.filter(
-        quest => quest.completed
-    ).length;
+/* SETTINGS */
 
-    document.getElementById("completedCount").textContent =
-        count + " quests completed";
+$("#saveNameBtn").addEventListener("click", () => {
 
-}
+    let name = $("#playerNameInput").value.trim();
 
+    if (!name) {
 
-// =====================================
-// PLAYER NAME SETTINGS
-// =====================================
+        alert("Please enter a player name.");
 
-const playerNameInput =
-    document.getElementById("playerNameInput");
+        return;
+    }
 
-document.getElementById("saveNameBtn")
-    .addEventListener("click", () => {
+    player.name = name;
 
-        const newName = playerNameInput.value.trim();
+    updatePlayer();
 
-        if (newName.length === 0) {
-            alert("Please enter a player name.");
-            return;
-        }
+    alert("Player name updated!");
+});
 
-        player.name = newName;
+/* LOGOUT */
 
-        updatePlayer();
+$("#logoutBtn").addEventListener("click", () => {
 
-        alert("Player name updated!");
+    if (confirm("Are you sure you want to log out?")) {
 
-    });
+        location.href = "index.html";
+    }
+});
 
+/* MUSIC */
 
-// =====================================
-// LOG OUT
-// =====================================
+const music = $("#bgMusic");
 
-document.getElementById("logoutBtn")
-    .addEventListener("click", () => {
-
-        const confirmLogout = confirm(
-            "Are you sure you want to log out?"
-        );
-
-        if (confirmLogout) {
-            window.location.href = "index.html";
-        }
-
-    });
-
-
-// =====================================
-// MUSIC SYSTEM
-// =====================================
-
-const music = document.getElementById("bgMusic");
-
-const musicButton = document.getElementById("musicButton");
-
-const musicPanel = document.getElementById("musicPanel");
-
-const musicToggle = document.getElementById("musicToggle");
-
-const volumeSlider = document.getElementById("volumeSlider");
-
-const volumeValue = document.getElementById("volumeValue");
-
-const closeMusicPanel =
-    document.getElementById("closeMusicPanel");
-
-let musicEnabled = false;
+let playing = false;
 
 music.volume = 0.25;
 
+$("#musicButton").addEventListener("click", () => {
 
-// Open / close panel
-
-musicButton.addEventListener("click", () => {
-
-    musicPanel.classList.toggle("open");
-
+    $("#musicPanel").classList.toggle("open");
 });
 
-closeMusicPanel.addEventListener("click", () => {
+$("#closeMusicPanel").addEventListener("click", () => {
 
-    musicPanel.classList.remove("open");
-
+    $("#musicPanel").classList.remove("open");
 });
 
+/* MUSIC ON/OFF */
 
-// Music on/off
+$("#musicToggle").addEventListener("click", async () => {
 
-musicToggle.addEventListener("click", async () => {
-
-    if (!musicEnabled) {
+    if (!playing) {
 
         try {
 
             await music.play();
 
-            musicEnabled = true;
+            playing = true;
 
-            musicButton.classList.add("playing");
+            $("#musicButton").classList.add("playing");
 
-            musicToggle.classList.add("on");
-
-            musicToggle.textContent = "ON";
-
-            musicButton.setAttribute("aria-pressed", "true");
-
-            musicButton.setAttribute("aria-label", "Turn music off");
+            $("#musicToggle").textContent = "ON";
 
         } catch (error) {
 
             alert("Music could not play. Check ambient.mp3.");
-
-            console.error(error);
-
         }
 
     } else {
 
         music.pause();
 
-        musicEnabled = false;
+        playing = false;
 
-        musicButton.classList.remove("playing");
+        $("#musicButton").classList.remove("playing");
 
-        musicToggle.classList.remove("on");
-
-        musicToggle.textContent = "OFF";
-
-        musicButton.setAttribute("aria-pressed", "false");
-
-        musicButton.setAttribute("aria-label", "Turn music on");
-
+        $("#musicToggle").textContent = "OFF";
     }
-
 });
 
+/* MUSIC VOLUME */
 
-// Volume
+$("#volumeSlider").addEventListener("input", event => {
 
-volumeSlider.addEventListener("input", () => {
+    music.volume = Number(event.target.value) / 100;
 
-    const volume = Number(volumeSlider.value);
-
-    music.volume = volume / 100;
-
-    volumeValue.textContent = volume + "%";
-
+    $("#volumeValue").textContent =
+        event.target.value + "%";
 });
 
-
-// Close music panel outside click
+/* CLOSE MUSIC PANEL OUTSIDE */
 
 document.addEventListener("click", event => {
 
     if (!event.target.closest(".music-control")) {
-        musicPanel.classList.remove("open");
-    }
 
+        $("#musicPanel").classList.remove("open");
+    }
 });
 
+/* INITIAL RENDER */
 
-// Escape closes panel
-
-document.addEventListener("keydown", event => {
-
-    if (event.key === "Escape") {
-        musicPanel.classList.remove("open");
-    }
-
-});
-
-
-// =====================================
-// INITIALIZE DASHBOARD
-// =====================================
-
-renderActiveQuests();
-renderQuestPage();
+renderQuests();
+renderDashboard();
 renderEvents();
 
 updatePlayer();
 updateStats();
-updateCompletedCount();
+countDone();
