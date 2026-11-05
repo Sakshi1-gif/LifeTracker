@@ -4,376 +4,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>LIFE TRACKER | Dashboard</title>
 
     <link rel="stylesheet" href="dashboard.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<div class="dashboard-layout">
+<div class="layout">
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
 
         <div class="logo">
-            <div class="logo-symbol">♜</div>
+            <div class="symbol">♜</div>
             <h2>LIFE TRACKER</h2>
-            <span>YOUR PERSONAL REALM</span>
+            <small>YOUR PERSONAL REALM</small>
         </div>
 
-        <nav class="navigation">
-
-            <button class="nav-btn active" data-page="dashboard">
-                <span>⌂</span> Dashboard
-            </button>
-
-            <button class="nav-btn" data-page="quests">
-                <span>⚔</span> Quests
-            </button>
-
-            <button class="nav-btn" data-page="events">
-                <span>◈</span> Events
-            </button>
-
-            <button class="nav-btn" data-page="progress">
-                <span>◉</span> Progress
-            </button>
-
-            <button class="nav-btn" data-page="settings">
-                <span>⚙</span> Settings
-            </button>
-
+        <nav>
+            <button class="nav-btn active" data-page="dashboard">⌂ Dashboard</button>
+            <button class="nav-btn" data-page="quests">⚔ Quests</button>
+            <button class="nav-btn" data-page="events">◈ Events</button>
+            <button class="nav-btn" data-page="progress">◉ Progress</button>
+            <button class="nav-btn" data-page="settings">⚙ Settings</button>
         </nav>
 
-        <button class="logout-btn" id="logoutBtn">
-            <span>⇦</span> Log Out
-        </button>
+        <button class="logout" id="logoutBtn">⇦ Log Out</button>
 
     </aside>
 
-
     <!-- MAIN CONTENT -->
-    <main class="main-content">
+    <main>
 
         <!-- PLAYER HEADER -->
         <header class="player-header">
 
             <div class="player-info">
+                <div class="avatar">♞</div>
 
-                <div class="player-avatar">♞</div>
-
-                <div class="player-details">
-                    <span class="player-level" id="playerLevel">Lv. 5</span>
-
+                <div>
+                    <small id="playerLevel">Lv. 5</small>
                     <h2 id="playerName">Shadow Walker</h2>
 
-                    <div class="xp-container">
+                    <div class="xp-row">
                         <div class="xp-bar">
-                            <div class="xp-fill" id="xpFill"></div>
+                            <div id="xpFill"></div>
                         </div>
 
                         <span id="xpText">220 / 400 XP</span>
                     </div>
                 </div>
-
             </div>
 
             <div class="date-time">
-
-                <span id="dateText">Loading date...</span>
-
-                <div class="clock">
-                    <span id="timeText">00:00</span>
-                    <span class="clock-icon">◷</span>
-                </div>
-
+                <span id="dateText"></span>
+                <h3 id="timeText"></h3>
             </div>
 
         </header>
 
-
-        <!-- DASHBOARD PAGE -->
+        <!-- DASHBOARD -->
         <section class="page active" id="dashboardPage">
 
-            <!-- YOUR STATS -->
-            <section class="panel stats-section">
+            <section class="panel">
 
-                <div class="section-heading">
-                    <h2>Your Stats</h2>
-                </div>
+                <h2>Your Stats</h2>
 
                 <div class="stats-grid">
 
-                    <div class="stat-card health">
-                        <div class="stat-top">
-                            <span>♥</span>
-                            <h3>Health</h3>
-                        </div>
-                        <div class="stat-value">
-                            <strong id="healthValue">78</strong>/100
-                        </div>
-                        <div class="stat-bar">
-                            <div style="width:78%"></div>
-                        </div>
+                    <div class="stat">
+                        <span>♥ Health</span>
+                        <strong id="healthValue">78</strong>/100
+                        <div class="bar"><i id="healthBar" style="width:78%"></i></div>
                     </div>
 
-                    <div class="stat-card fitness">
-                        <div class="stat-top">
-                            <span>⚡</span>
-                            <h3>Fitness</h3>
-                        </div>
-                        <div class="stat-value">
-                            <strong id="fitnessValue">65</strong>/100
-                        </div>
-                        <div class="stat-bar">
-                            <div style="width:65%"></div>
-                        </div>
+                    <div class="stat">
+                        <span>⚡ Fitness</span>
+                        <strong id="fitnessValue">65</strong>/100
+                        <div class="bar"><i id="fitnessBar" style="width:65%"></i></div>
                     </div>
 
-                    <div class="stat-card focus">
-                        <div class="stat-top">
-                            <span>◉</span>
-                            <h3>Focus</h3>
-                        </div>
-                        <div class="stat-value">
-                            <strong id="focusValue">72</strong>/100
-                        </div>
-                        <div class="stat-bar">
-                            <div style="width:72%"></div>
-                        </div>
+                    <div class="stat">
+                        <span>◉ Focus</span>
+                        <strong id="focusValue">72</strong>/100
+                        <div class="bar"><i id="focusBar" style="width:72%"></i></div>
                     </div>
 
-                    <div class="stat-card finances">
-                        <div class="stat-top">
-                            <span>◈</span>
-                            <h3>Finances</h3>
-                        </div>
-                        <div class="stat-value">
-                            <strong id="financesValue">420</strong>/1000
-                        </div>
-                        <div class="stat-bar">
-                            <div style="width:42%"></div>
-                        </div>
+                    <div class="stat">
+                        <span>◈ Finances</span>
+                        <strong id="financesValue">420</strong>/1000
+                        <div class="bar"><i id="financesBar" style="width:42%"></i></div>
                     </div>
 
-                    <div class="stat-card time-stat">
-                        <div class="stat-top">
-                            <span>◷</span>
-                            <h3>Time</h3>
-                        </div>
-                        <div class="stat-value">
-                            <strong id="timeStatValue">85</strong>/100
-                        </div>
-                        <div class="stat-bar">
-                            <div style="width:85%"></div>
-                        </div>
+                    <div class="stat">
+                        <span>◷ Time</span>
+                        <strong id="timeStatValue">85</strong>/100
+                        <div class="bar"><i id="timeBar" style="width:85%"></i></div>
                     </div>
 
                 </div>
+
             </section>
 
+            <section class="panel">
 
-            <!-- QUESTS AND EVENTS -->
-            <div class="content-grid">
+                <div class="heading">
+                    <h2>Today's Quests</h2>
+                    <button class="link view-all" data-page="quests">Manage Quests →</button>
+                </div>
 
-                <!-- ACTIVE QUESTS -->
-                <section class="panel">
+                <div id="dashboardQuestList"></div>
 
-                    <div class="section-heading">
-                        <h2>Active Quests</h2>
+            </section>
 
-                        <button class="view-all" data-page="quests">
-                            View All →
-                        </button>
-                    </div>
+        </section>
 
-                    <div id="activeQuestList"></div>
+        <!-- QUESTS -->
+        <section class="page" id="questsPage">
 
-                </section>
+            <div class="quest-head">
 
+                <div>
+                    <small class="gold">YOUR PERSONAL REALM</small>
+                    <h1>Quest Board</h1>
+                    <p>Small actions. Legendary progress.</p>
+                </div>
 
-                <!-- RECENT EVENTS -->
-                <section class="panel">
+                <button class="gold-btn" id="addQuestBtn">＋ Add Quest</button>
 
-                    <div class="section-heading">
-                        <h2>Recent Events</h2>
+            </div>
 
-                        <button class="view-all" data-page="events">
-                            View All →
-                        </button>
-                    </div>
+            <div class="filters">
 
-                    <div id="recentEventList"></div>
+                <button class="quest-filter active" data-filter="all">All</button>
+                <button class="quest-filter" data-filter="daily">Daily</button>
+                <button class="quest-filter" data-filter="weekly">Weekly</button>
+                <button class="quest-filter" data-filter="compulsory">Compulsory</button>
+                <button class="quest-filter" data-filter="optional">Optional</button>
 
-                </section>
+            </div>
 
+            <div id="questList" class="quest-list"></div>
+
+        </section>
+
+        <!-- EVENTS -->
+        <section class="page panel" id="eventsPage">
+            <h2>Event Chronicle</h2>
+            <div id="allEventsList"></div>
+        </section>
+
+        <!-- PROGRESS -->
+        <section class="page panel" id="progressPage">
+
+            <h2>Your Progress</h2>
+
+            <div class="progress">
+                <div id="progressLevel">5</div>
+                <h3>Current Level</h3>
+
+                <p id="progressXP">220 XP earned</p>
+
+                <div class="xp-bar wide">
+                    <div id="progressXPFill"></div>
+                </div>
+
+                <p id="completedCount">0 quests completed</p>
             </div>
 
         </section>
 
+        <!-- SETTINGS -->
+        <section class="page panel" id="settingsPage">
 
-        <!-- QUESTS PAGE -->
-        <section class="page" id="questsPage">
+            <h2>Settings</h2>
 
-            <section class="panel">
-
-                <div class="section-heading">
-                    <h2>Quest Journal</h2>
-                </div>
-
-                <div class="quest-tabs">
-                    <button class="quest-tab active" data-tab="active">Active</button>
-                    <button class="quest-tab" data-tab="completed">Completed</button>
-                </div>
-
-                <div id="questPageList"></div>
-
-            </section>
+            <div class="settings">
+                <label for="playerNameInput">Player Name</label>
+                <input id="playerNameInput" placeholder="Enter player name">
+                <button class="gold-btn" id="saveNameBtn">Save Name</button>
+            </div>
 
         </section>
 
-
-        <!-- EVENTS PAGE -->
-        <section class="page" id="eventsPage">
-
-            <section class="panel">
-
-                <div class="section-heading">
-                    <h2>Event Chronicle</h2>
-                </div>
-
-                <div id="allEventsList"></div>
-
-            </section>
-
-        </section>
-
-
-        <!-- PROGRESS PAGE -->
-        <section class="page" id="progressPage">
-
-            <section class="panel">
-
-                <div class="section-heading">
-                    <h2>Your Progress</h2>
-                </div>
-
-                <div class="progress-content">
-                    <div class="progress-number" id="progressLevel">5</div>
-                    <h3>Current Level</h3>
-                    <p id="progressXP">220 XP earned</p>
-
-                    <div class="xp-bar large">
-                        <div class="xp-fill" id="progressXPFill"></div>
-                    </div>
-
-                    <p id="completedCount">0 quests completed</p>
-                </div>
-
-            </section>
-
-        </section>
-
-
-        <!-- SETTINGS PAGE -->
-        <section class="page" id="settingsPage">
-
-            <section class="panel">
-
-                <div class="section-heading">
-                    <h2>Settings</h2>
-                </div>
-
-                <div class="settings-content">
-
-                    <label for="playerNameInput">Player Name</label>
-
-                    <input type="text" id="playerNameInput"
-                           placeholder="Enter player name">
-
-                    <button class="gold-button" id="saveNameBtn">
-                        Save Name
-                    </button>
-
-                    <p class="settings-note">
-                        Your dashboard settings are saved in this browser.
-                    </p>
-
-                </div>
-
-            </section>
-
-        </section>
-
-
-        <!-- MOTIVATIONAL QUOTE -->
-        <footer class="quote-footer">
-            <span>✦</span>
-            Small steps create legendary heroes.
-            <span>✦</span>
-        </footer>
+        <footer>✦ Small steps create legendary heroes. ✦</footer>
 
     </main>
 
 </div>
 
+<!-- ADD QUEST MODAL -->
+<div class="quest-modal" id="questModal">
 
-<!-- BACKGROUND MUSIC -->
-<audio id="bgMusic" loop>
-    <source src="ambient.mp3" type="audio/mpeg">
-</audio>
+    <form class="modal-card" id="questForm">
 
+        <div class="heading">
+            <h2>Add New Quest</h2>
+            <button type="button" id="closeQuestModal" class="close">×</button>
+        </div>
 
-<!-- MUSIC CONTROL -->
+        <label for="newQuestTitle">Quest Name</label>
+        <input id="newQuestTitle" placeholder="e.g. Read 20 pages" required>
+
+        <label for="newQuestCategory">Frequency</label>
+        <select id="newQuestCategory">
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+        </select>
+
+        <label for="newQuestType">Quest Type</label>
+        <select id="newQuestType">
+            <option value="compulsory">Compulsory</option>
+            <option value="optional">Optional</option>
+        </select>
+
+        <label for="newQuestTarget">Target</label>
+        <input id="newQuestTarget" type="number" min="1" value="1" required>
+
+        <label for="newQuestXP">XP Reward</label>
+        <input id="newQuestXP" type="number" min="1" value="10" required>
+
+        <label for="newQuestDue">Due</label>
+        <select id="newQuestDue">
+            <option>Due today</option>
+            <option>Due in 2 days</option>
+            <option>Due in 4 days</option>
+            <option>Due this week</option>
+        </select>
+
+        <button class="gold-btn" type="submit">Create Quest</button>
+
+    </form>
+
+</div>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop src="ambient.mp3"></audio>
+
 <div class="music-control">
 
-    <button id="musicButton" class="music-button"
-            aria-label="Turn music on" aria-pressed="false">
+    <button id="musicButton" class="music-button">♫</button>
 
-        <!-- Speaker icon -->
-        <svg id="speakerIcon" viewBox="0 0 24 24"
-             width="24" height="24"
-             fill="none" stroke="currentColor"
-             stroke-width="1.8"
-             stroke-linecap="round"
-             stroke-linejoin="round">
+    <div id="musicPanel" class="music-panel">
 
-            <path d="M11 5 6 9H3v6h3l5 4V5Z"></path>
-            <path d="M15.5 8.5a5 5 0 0 1 0 7"></path>
-            <path d="M18.5 5.5a9 9 0 0 1 0 13"></path>
-
-        </svg>
-
-    </button>
-
-    <div class="music-panel" id="musicPanel">
-
-        <div class="music-heading">
-            <span>AMBIENT MUSIC</span>
+        <div class="heading">
+            <b>AMBIENT MUSIC</b>
             <button id="closeMusicPanel">×</button>
         </div>
 
-        <div class="music-row">
-            <span>Music</span>
+        <div class="heading">
+            Music
             <button id="musicToggle">OFF</button>
         </div>
 
-        <div class="volume-row">
-            <label for="volumeSlider">Volume</label>
-            <span id="volumeValue">25%</span>
-        </div>
-
-        <input type="range" id="volumeSlider"
-               min="0" max="100" value="25">
+        <label>Volume <span id="volumeValue">25%</span></label>
+        <input id="volumeSlider" type="range" min="0" max="100" value="25">
 
     </div>
 
 </div>
-
 
 <script src="dashboard.js"></script>
 
