@@ -1,273 +1,457 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LIFE TRACKER | Dashboard</title>
 
-    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;600&family=Inter:wght@400;500;600&display=swap"
+          rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 
 <body>
 
-<div class="layout">
+    <div class="dashboard">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
 
-        <div class="logo">
-            <div class="symbol">♜</div>
-            <h2>LIFE TRACKER</h2>
-            <small>YOUR PERSONAL REALM</small>
-        </div>
+            <div class="sidebar-logo">
+                <div class="logo-symbol">✦</div>
+                <h2>LIFE TRACKER</h2>
+                <p>Your Life Your Quests</p>
+            </div>
 
-        <nav>
-            <button class="nav-btn active" data-page="dashboard">⌂ Dashboard</button>
-            <button class="nav-btn" data-page="quests">⚔ Quests</button>
-            <button class="nav-btn" data-page="events">◈ Events</button>
-            <button class="nav-btn" data-page="progress">◉ Progress</button>
-            <button class="nav-btn" data-page="settings">⚙ Settings</button>
-        </nav>
+            <div class="player-profile">
+                <div class="player-avatar">✦</div>
 
-        <button class="logout" id="logoutBtn">⇦ Log Out</button>
-
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main>
-
-        <!-- PLAYER HEADER -->
-        <header class="player-header">
-
-            <div class="player-info">
-                <div class="avatar">♞</div>
-
-                <div>
-                    <small id="playerLevel">Lv. 5</small>
-                    <h2 id="playerName">Shadow Walker</h2>
-
-                    <div class="xp-row">
-                        <div class="xp-bar">
-                            <div id="xpFill"></div>
-                        </div>
-
-                        <span id="xpText">220 / 400 XP</span>
-                    </div>
+                <div class="player-info">
+                    <h3 id="playerName">Adventurer</h3>
+                    <p>Level <span id="playerLevel">1</span></p>
                 </div>
             </div>
 
-            <div class="date-time">
-                <span id="dateText"></span>
-                <h3 id="timeText"></h3>
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-page="overview">
+                    <span>⚔</span> Overview
+                </button>
+
+                <button class="nav-btn" data-page="quests">
+                    <span>📜</span> Quests
+                </button>
+
+                <button class="nav-btn" data-page="stats">
+                    <span>✦</span> Stats
+                </button>
+
+                <button class="nav-btn" data-page="events">
+                    <span>⚡</span> Events
+                </button>
+
+                <button class="nav-btn" data-page="settings">
+                    <span>⚙</span> Settings
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="logout-btn">
+                    ⇥ Logout
+                </button>
             </div>
 
-        </header>
+        </aside>
 
-        <!-- DASHBOARD -->
-        <section class="page active" id="dashboardPage">
 
-            <section class="panel">
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
 
-                <h2>Your Stats</h2>
+            <!-- TOP BAR -->
+            <header class="topbar">
+
+                <div class="welcome-section">
+                    <p class="eyebrow">THE JOURNEY CONTINUES</p>
+                    <h1>Welcome, <span id="welcomeName">Adventurer</span></h1>
+                    <p>Your journey continues today.</p>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="clock-box">
+                        <span id="currentDate">Loading date...</span>
+                        <strong id="currentTime">00:00:00</strong>
+                    </div>
+                </div>
+
+            </header>
+
+
+            <!-- OVERVIEW -->
+            <section class="page active" id="overview">
+
+                <div class="section-heading">
+                    <h2>Adventure Overview</h2>
+                    <p>Your progress, your journey.</p>
+                </div>
+
+                <div class="overview-grid">
+
+                    <div class="overview-card">
+                        <h3>Level</h3>
+                        <div class="big-number" id="overviewLevel">1</div>
+                        <p>Your current rank</p>
+                    </div>
+
+                    <div class="overview-card">
+                        <h3>Total XP</h3>
+                        <div class="big-number" id="overviewXP">0</div>
+                        <p>Experience earned</p>
+                    </div>
+
+                    <div class="overview-card">
+                        <h3>Quests Completed</h3>
+                        <div class="big-number" id="overviewCompleted">0</div>
+                        <p>Victories achieved</p>
+                    </div>
+
+                </div>
+
+                <div class="xp-card">
+                    <div class="xp-heading">
+                        <h3>Experience Progress</h3>
+                        <span id="xpText">0 / 400 XP</span>
+                    </div>
+
+                    <div class="xp-track">
+                        <div class="xp-fill" id="xpFill"></div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+
+                    <div class="card-heading">
+                        <div>
+                            <h3>Active Quests</h3>
+                            <p>Your next challenges await.</p>
+                        </div>
+
+                        <button class="small-btn" data-page="quests">
+                            View All
+                        </button>
+                    </div>
+
+                    <div id="activeQuestList">
+                        <p class="empty-message">Loading quests...</p>
+                    </div>
+
+                </div>
+
+                <div class="content-card">
+
+                    <div class="card-heading">
+                        <div>
+                            <h3>Recent Events</h3>
+                            <p>Records of your journey.</p>
+                        </div>
+
+                        <button class="small-btn" data-page="events">
+                            View All
+                        </button>
+                    </div>
+
+                    <div id="recentEventList">
+                        <p class="empty-message">Loading events...</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- QUESTS -->
+            <section class="page" id="quests">
+
+                <div class="section-heading">
+                    <h2>Your Quests</h2>
+                    <p>Complete your quests and earn rewards.</p>
+                </div>
+
+                <div class="content-card">
+
+                    <div class="card-heading">
+                        <div>
+                            <h3>Quest Journal</h3>
+                            <p>Choose a challenge and make progress.</p>
+                        </div>
+                    </div>
+
+                    <div id="questPageList">
+                        <p class="empty-message">Loading quests...</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- STATS -->
+            <section class="page" id="stats">
+
+                <div class="section-heading">
+                    <h2>Character Stats</h2>
+                    <p>Build your character through real-life progress.</p>
+                </div>
 
                 <div class="stats-grid">
 
-                    <div class="stat">
-                        <span>♥ Health</span>
-                        <strong id="healthValue">78</strong>/100
-                        <div class="bar"><i id="healthBar" style="width:78%"></i></div>
+                    <div class="stat-card">
+                        <div class="stat-icon">♡</div>
+                        <h3>Health</h3>
+                        <div class="stat-value">
+                            <strong id="healthValue">78</strong>
+                            <span>/100</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-fill" id="healthBar"></div>
+                        </div>
                     </div>
 
-                    <div class="stat">
-                        <span>⚡ Fitness</span>
-                        <strong id="fitnessValue">65</strong>/100
-                        <div class="bar"><i id="fitnessBar" style="width:65%"></i></div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⚔</div>
+                        <h3>Fitness</h3>
+                        <div class="stat-value">
+                            <strong id="fitnessValue">65</strong>
+                            <span>/100</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-fill" id="fitnessBar"></div>
+                        </div>
                     </div>
 
-                    <div class="stat">
-                        <span>◉ Focus</span>
-                        <strong id="focusValue">72</strong>/100
-                        <div class="bar"><i id="focusBar" style="width:72%"></i></div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✧</div>
+                        <h3>Focus</h3>
+                        <div class="stat-value">
+                            <strong id="focusValue">72</strong>
+                            <span>/100</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-fill" id="focusBar"></div>
+                        </div>
                     </div>
 
-                    <div class="stat">
-                        <span>◈ Finances</span>
-                        <strong id="financesValue">420</strong>/1000
-                        <div class="bar"><i id="financesBar" style="width:42%"></i></div>
-                    </div>
-
-                    <div class="stat">
-                        <span>◷ Time</span>
-                        <strong id="timeStatValue">85</strong>/100
-                        <div class="bar"><i id="timeBar" style="width:85%"></i></div>
+                    <div class="stat-card">
+                        <div class="stat-icon">◈</div>
+                        <h3>Finances</h3>
+                        <div class="stat-value">
+                            <strong id="financeValue">420</strong>
+                            <span>/1000</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-fill" id="financeBar"></div>
+                        </div>
                     </div>
 
                 </div>
 
             </section>
 
-            <section class="panel">
 
-                <div class="heading">
-                    <h2>Today's Quests</h2>
-                    <button class="link view-all" data-page="quests">Manage Quests →</button>
+            <!-- EVENTS -->
+            <section class="page" id="events">
+
+                <div class="section-heading">
+                    <h2>Adventure Events</h2>
+                    <p>Every action shapes your journey.</p>
                 </div>
 
-                <div id="dashboardQuestList"></div>
+                <div class="content-card">
+
+                    <div class="card-heading">
+                        <h3>Event History</h3>
+                    </div>
+
+                    <div id="eventPageList">
+                        <p class="empty-message">Loading events...</p>
+                    </div>
+
+                </div>
 
             </section>
 
-        </section>
 
-        <!-- QUESTS -->
-        <section class="page" id="questsPage">
+            <!-- SETTINGS -->
+            <section class="page" id="settings">
 
-            <div class="quest-head">
-
-                <div>
-                    <small class="gold">YOUR PERSONAL REALM</small>
-                    <h1>Quest Board</h1>
-                    <p>Small actions. Legendary progress.</p>
+                <div class="section-heading">
+                    <h2>Settings</h2>
+                    <p>Manage your character and account.</p>
                 </div>
 
-                <button class="gold-btn" id="addQuestBtn">＋ Add Quest</button>
+                <div class="content-card settings-content">
 
-            </div>
+                    <h3>Character Settings</h3>
 
-            <div class="filters">
+                    <label for="playerNameInput">Character Name</label>
 
-                <button class="quest-filter active" data-filter="all">All</button>
-                <button class="quest-filter" data-filter="daily">Daily</button>
-                <button class="quest-filter" data-filter="weekly">Weekly</button>
-                <button class="quest-filter" data-filter="compulsory">Compulsory</button>
-                <button class="quest-filter" data-filter="optional">Optional</button>
+                    <input
+                        type="text"
+                        id="playerNameInput"
+                        placeholder="Enter your character name"
+                        maxlength="30"
+                    >
 
-            </div>
+                    <button id="saveNameBtn" class="primary-btn">
+                        Save Character Name
+                    </button>
 
-            <div id="questList" class="quest-list"></div>
+                    <hr>
 
-        </section>
+                    <h3>Account Information</h3>
 
-        <!-- EVENTS -->
-        <section class="page panel" id="eventsPage">
-            <h2>Event Chronicle</h2>
-            <div id="allEventsList"></div>
-        </section>
+                    <label>Email Address</label>
+                    <p id="accountEmail">Loading account email...</p>
 
-        <!-- PROGRESS -->
-        <section class="page panel" id="progressPage">
+                    <hr>
 
-            <h2>Your Progress</h2>
+                    <h3>Change Password</h3>
 
-            <div class="progress">
-                <div id="progressLevel">5</div>
-                <h3>Current Level</h3>
+                    <label for="currentPassword">Current Password</label>
+                    <input
+                        type="password"
+                        id="currentPassword"
+                        placeholder="Enter current password"
+                        autocomplete="current-password"
+                    >
 
-                <p id="progressXP">220 XP earned</p>
+                    <label for="newPassword">New Password</label>
+                    <input
+                        type="password"
+                        id="newPassword"
+                        placeholder="Enter new password"
+                        autocomplete="new-password"
+                    >
 
-                <div class="xp-bar wide">
-                    <div id="progressXPFill"></div>
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm new password"
+                        autocomplete="new-password"
+                    >
+
+                    <p class="settings-note">
+                        Password must be more than 8 characters and include
+                        uppercase, lowercase, a number and a special character.
+                    </p>
+
+                    <button id="changePasswordBtn" class="primary-btn">
+                        Change Password
+                    </button>
+
+                    <p id="changePasswordMessage" class="status-message"></p>
+
+                    <hr>
+
+                    <h3>Game Data</h3>
+
+                    <p class="settings-note">
+                        Your progress is saved to your account using Firebase.
+                    </p>
+
+                    <button id="syncDataBtn" class="primary-btn">
+                        Sync Game Data
+                    </button>
+
+                    <p id="syncMessage" class="status-message"></p>
+
+                    <hr>
+
+                    <h3>Reset Progress</h3>
+
+                    <p class="settings-note">
+                        This resets your character's level, XP, stats and quests.
+                    </p>
+
+                    <button id="resetProgressBtn" class="danger-btn">
+                        Reset Game Progress
+                    </button>
+
+                    <hr>
+
+                    <h3>Account</h3>
+
+                    <button id="settingsLogoutBtn" class="danger-btn">
+                        Logout
+                    </button>
+
                 </div>
 
-                <p id="completedCount">0 quests completed</p>
-            </div>
+            </section>
 
-        </section>
-
-        <!-- SETTINGS -->
-        <section class="page panel" id="settingsPage">
-
-            <h2>Settings</h2>
-
-            <div class="settings">
-                <label for="playerNameInput">Player Name</label>
-                <input id="playerNameInput" placeholder="Enter player name">
-                <button class="gold-btn" id="saveNameBtn">Save Name</button>
-            </div>
-
-        </section>
-
-        <footer>✦ Small steps create legendary heroes. ✦</footer>
-
-    </main>
-
-</div>
-
-<!-- ADD QUEST MODAL -->
-<div class="quest-modal" id="questModal">
-
-    <form class="modal-card" id="questForm">
-
-        <div class="heading">
-            <h2>Add New Quest</h2>
-            <button type="button" id="closeQuestModal" class="close">×</button>
-        </div>
-
-        <label for="newQuestTitle">Quest Name</label>
-        <input id="newQuestTitle" placeholder="e.g. Read 20 pages" required>
-
-        <label for="newQuestCategory">Frequency</label>
-        <select id="newQuestCategory">
-            <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
-        </select>
-
-        <label for="newQuestType">Quest Type</label>
-        <select id="newQuestType">
-            <option value="compulsory">Compulsory</option>
-            <option value="optional">Optional</option>
-        </select>
-
-        <label for="newQuestTarget">Target</label>
-        <input id="newQuestTarget" type="number" min="1" value="1" required>
-
-        <label for="newQuestXP">XP Reward</label>
-        <input id="newQuestXP" type="number" min="1" value="10" required>
-
-        <label for="newQuestDue">Due</label>
-        <select id="newQuestDue">
-            <option>Due today</option>
-            <option>Due in 2 days</option>
-            <option>Due in 4 days</option>
-            <option>Due this week</option>
-        </select>
-
-        <button class="gold-btn" type="submit">Create Quest</button>
-
-    </form>
-
-</div>
-
-<!-- MUSIC -->
-<audio id="bgMusic" loop src="ambient.mp3"></audio>
-
-<div class="music-control">
-
-    <button id="musicButton" class="music-button">♫</button>
-
-    <div id="musicPanel" class="music-panel">
-
-        <div class="heading">
-            <b>AMBIENT MUSIC</b>
-            <button id="closeMusicPanel">×</button>
-        </div>
-
-        <div class="heading">
-            Music
-            <button id="musicToggle">OFF</button>
-        </div>
-
-        <label>Volume <span id="volumeValue">25%</span></label>
-        <input id="volumeSlider" type="range" min="0" max="100" value="25">
+        </main>
 
     </div>
 
-</div>
 
-<script src="dashboard.js"></script>
+    <!-- MUSIC CONTROL -->
+    <div class="music-control">
+
+        <button
+            id="musicButton"
+            class="music-button"
+            aria-label="Open music controls"
+            title="Music settings"
+        >
+            ♫
+        </button>
+
+        <div id="musicPanel" class="music-panel">
+
+            <div class="music-panel-heading">
+                <h3>Enchanted Sound</h3>
+
+                <button id="closeMusicPanel" class="close-music">
+                    ×
+                </button>
+            </div>
+
+            <div class="music-toggle-row">
+                <span>Background Music</span>
+
+                <button id="musicToggle" class="music-toggle">
+                    OFF
+                </button>
+            </div>
+
+            <label for="volumeSlider">Volume</label>
+
+            <div class="volume-row">
+                <input
+                    type="range"
+                    id="volumeSlider"
+                    min="0"
+                    max="100"
+                    value="25"
+                >
+
+                <span id="volumeValue">25%</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BACKGROUND MUSIC -->
+    <audio id="bgMusic" loop>
+        <source src="ambient.mp3" type="audio/mpeg">
+    </audio>
+
+
+    <script type="module" src="dashboard.js"></script>
 
 </body>
 </html>
